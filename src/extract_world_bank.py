@@ -3,7 +3,20 @@
 import requests
 
 BASE_URL = "https://api.worldbank.org/v2"
+# Countries to track (ISO 3166-1 alpha-3 codes)
+COUNTRIES = ["USA", "FRA", "DEU", "GBR", "JPN", "CHN", "IND", "BRA", "MEX", "ZAF", "KOR", "TUR","MDG"]
 
+# World Bank indicators to extract
+INDICATORS = {
+    "NY.GDP.MKTP.CD": "GDP (current US$)",
+    "NY.GDP.PCAP.CD": "GDP per capita (current US$)",
+    "FP.CPI.TOTL.ZG": "Inflation, consumer prices (annual %)",
+    "SP.POP.TOTL": "Population, total",
+    "SL.UEM.TOTL.ZS": "Unemployment (% of labor force)",
+}
+
+START_YEAR = 2000
+END_YEAR = 2025
 
 def fetch_page(country, indicator, start_year, end_year, page=1, per_page=50):
     """Fetch one page of results for an indicator."""
@@ -35,7 +48,9 @@ def fetch_all_pages(country, indicator, start_year, end_year, per_page=1000):
 
 
 if __name__ == "__main__":
-    records = fetch_all_pages("FRA;DEU", "SP.POP.TOTL", 2018, 2023, per_page=5)
-    print(f"{len(records)} records fetched")
-    for record in records:
-        print(record["country"]["value"], record["date"], record["value"])
+    countries = ";".join(COUNTRIES)
+    for indicator, name in INDICATORS.items():
+        records = fetch_all_pages(countries, indicator, START_YEAR, END_YEAR)
+        print(f"{indicator} ({name}): {len(records)} records")
+        missing = sum(1 for r in records if r["value"] is None)
+        print(f"   of which {missing} without value")
