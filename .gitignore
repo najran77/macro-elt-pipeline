@@ -1,10 +1,10 @@
-# Données : jamais dans Git (trop volumineuses, et régénérables)
+# Data: never committed (too large, and can be regenerated)
 data/
 
-# Secrets et configuration locale
+# Secrets and local configuration
 .env
 
-# Fichiers générés par dbt
+# dbt generated files
 dbt/target/
 dbt/logs/
 dbt/dbt_packages/
@@ -13,5 +13,5 @@ dbt/dbt_packages/
 __pycache__/
 *.pyc
 
-# Éditeurs
+# Editors
 .vscode/
