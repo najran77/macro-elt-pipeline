@@ -1,0 +1,17 @@
+name: macro_elt
+version: "1.0.0"
+profile: macro_elt
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+
+models:
+  macro_elt:
+    staging:
+      +materialized: view
+      +schema: staging
+    marts:
+      +materialized: table
+      +schema: marts
