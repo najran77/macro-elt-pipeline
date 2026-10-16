@@ -1,6 +1,9 @@
 """Extract economic indicators from the World Bank API."""
 
 import requests
+import json
+from datetime import datetime, timezone
+from pathlib import Path
 
 BASE_URL = "https://api.worldbank.org/v2"
 # Countries to track (ISO 3166-1 alpha-3 codes)
@@ -17,7 +20,7 @@ INDICATORS = {
 
 START_YEAR = 2000
 END_YEAR = 2025
-
+RAW_DIR = Path("data/raw/world_bank")
 def fetch_page(country, indicator, start_year, end_year, page=1, per_page=50):
     """Fetch one page of results for an indicator."""
     url = f"{BASE_URL}/country/{country}/indicator/{indicator}"
@@ -46,11 +49,20 @@ def fetch_all_pages(country, indicator, start_year, end_year, per_page=1000):
         page += 1
     return all_records
 
+def save_raw(records, indicator, extracted_at):
+    """Save raw API records to a JSON file, partitioned by ingestion date."""
+    folder = RAW_DIR / f"ingestion_date={extracted_at:%Y-%m-%d}"
+    folder.mkdir(parents=True, exist_ok=True)
+    file_name = f"{indicator.replace('.', '_')}__{extracted_at:%Y%m%dT%H%M%SZ}.json"
+    path = folder / file_name
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(records, f, ensure_ascii=False)
+    return path
 
 if __name__ == "__main__":
+    extracted_at = datetime.now(timezone.utc)
     countries = ";".join(COUNTRIES)
     for indicator, name in INDICATORS.items():
         records = fetch_all_pages(countries, indicator, START_YEAR, END_YEAR)
-        print(f"{indicator} ({name}): {len(records)} records")
-        missing = sum(1 for r in records if r["value"] is None)
-        print(f"   of which {missing} without value")
+        path = save_raw(records, indicator, extracted_at)
+        print(f"{indicator}: {len(records)} records saved to {path}")
