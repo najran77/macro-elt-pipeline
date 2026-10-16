@@ -1,0 +1,17 @@
+# Données : jamais dans Git (trop volumineuses, et régénérables)
+data/
+
+# Secrets et configuration locale
+.env
+
+# Fichiers générés par dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+# Python
+__pycache__/
+*.pyc
+
+# Éditeurs
+.vscode/
