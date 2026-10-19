@@ -1,0 +1,15 @@
+version: 2
+
+seeds:
+  - name: country_reference
+    description: Reference attributes for the tracked countries, maintained by hand.
+    columns:
+      - name: country_iso3
+        description: ISO 3166-1 alpha-3 country code.
+        data_tests:
+          - unique
+          - not_null
+      - name: currency_code
+        description: ISO 4217 code of the local currency.
+        data_tests:
+          - not_null

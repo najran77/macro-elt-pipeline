@@ -15,3 +15,6 @@ models:
     marts:
       +materialized: table
       +schema: marts
+seeds:
+  macro_elt:
+    +schema: reference

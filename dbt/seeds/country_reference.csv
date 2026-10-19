@@ -1,0 +1,14 @@
+country_iso3,country_name,region,currency_code
+USA,United States,North America,USD
+FRA,France,Europe & Central Asia,EUR
+DEU,Germany,Europe & Central Asia,EUR
+GBR,United Kingdom,Europe & Central Asia,GBP
+TUR,Turkiye,Europe & Central Asia,TRY
+JPN,Japan,East Asia & Pacific,JPY
+CHN,China,East Asia & Pacific,CNY
+KOR,"Korea, Rep.",East Asia & Pacific,KRW
+IND,India,South Asia,INR
+BRA,Brazil,Latin America & Caribbean,BRL
+MEX,Mexico,Latin America & Caribbean,MXN
+ZAF,South Africa,Sub-Saharan Africa,ZAR
+MDG,Madagascar,Sub-Saharan Africa,MGA
