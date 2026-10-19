@@ -16,4 +16,31 @@ models:
         data_tests:
           - not_null
       - name: currency_code
-        description: ISO 4217 code of the local currency.
+        description: ISO 4217 code of the local currency
+  - name: fct_country_indicators_yearly
+    description: >
+      Economic indicators per country and year, one column per indicator.
+      Grain: one row per country and year.
+    columns:
+      - name: country_iso3
+        description: ISO 3166-1 alpha-3 country code. Foreign key to dim_country.
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_country')
+                field: country_iso3
+      - name: year
+        description: Reference year.
+        data_tests:
+          - not_null
+      - name: gdp_usd
+        description: Gross domestic product, current US dollars.
+      - name: gdp_per_capita_usd
+        description: GDP per capita, current US dollars.
+      - name: inflation_pct
+        description: Annual consumer price inflation, in percent.
+      - name: population
+        description: Total population.
+      - name: unemployment_pct
+        description: Unemployment, percent of the total labor force (ILO modeled estimate).
